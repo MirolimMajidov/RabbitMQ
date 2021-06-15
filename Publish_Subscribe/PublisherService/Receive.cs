@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
-using EventBus.RabbitMQ;
+using Common.RabbitMQ;
 
 namespace SubscribeService
 {

@@ -1,4 +1,4 @@
-﻿using EventBus.RabbitMQ;
+﻿using Common.RabbitMQ;
 using System;
 
 namespace Sender
