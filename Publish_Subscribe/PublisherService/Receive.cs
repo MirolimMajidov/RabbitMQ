@@ -27,7 +27,7 @@ namespace SubscribeService
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
 
-                Console.WriteLine("[x] Received '{0}':'{1}'", routingKey, message);
+                Console.WriteLine("[x] Received '{0}'", message);
             };
             EventBus.Model.BasicConsume(queue: queueName,  autoAck: true, consumer: consumer);
 

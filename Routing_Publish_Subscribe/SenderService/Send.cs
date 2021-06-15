@@ -11,7 +11,7 @@ namespace SenderService
 
         public static void Main(string[] args)
         {
-            EventBus = new EventBusRabbitMQ();
+            EventBus = new EventBusRabbitMQ(exchange: "MicroService");
             EventBus.Model.ExchangeDeclare(exchange: EventBus.Exchange, type: ExchangeType.Direct);
 
             SendMessage();

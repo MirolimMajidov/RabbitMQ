@@ -18,19 +18,19 @@ namespace Worker
             EventBus.Model.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
             EventBus.Model.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
 
-            Console.WriteLine("[*] Waiting for jobs.");
+            Console.WriteLine("[*] Waiting for tasks.");
 
             var consumer = new EventingBasicConsumer(EventBus.Model);
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine("[x] Received {0}", message);
+                Console.WriteLine("[x] Received '{0}' task", message);
 
-                int dots = message.Split('.').Length - 1;
-                Thread.Sleep(dots * 1000);
+                int secunds = new Random().Next(2, 5);
+                Thread.Sleep(secunds * 1000);
 
-                Console.WriteLine("[x] {0} done", message);
+                Console.WriteLine("[x] '{0}' task done", message);
 
                 EventBus.Model.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
             };

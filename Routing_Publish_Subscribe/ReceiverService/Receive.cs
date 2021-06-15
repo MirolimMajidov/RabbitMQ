@@ -12,7 +12,7 @@ namespace ReceiverService
 
         public static void Main()
         {
-            EventBus = new EventBusRabbitMQ();
+            EventBus = new EventBusRabbitMQ(exchange: "MicroService");
             EventBus.Model.ExchangeDeclare(exchange: EventBus.Exchange, type: ExchangeType.Direct);
 
             Console.Write($"Enter Routing Key:");

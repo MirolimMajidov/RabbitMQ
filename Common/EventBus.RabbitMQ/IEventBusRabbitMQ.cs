@@ -8,6 +8,6 @@ namespace EventBus.RabbitMQ
 
         string Exchange { get; set; }
 
-        void Publish(string message, string routingKey, IBasicProperties basicProperties);
+        void Publish(string message, string routingKey, IBasicProperties basicProperties = null);
     }
 }

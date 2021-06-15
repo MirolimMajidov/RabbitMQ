@@ -7,6 +7,7 @@ namespace Sender
     {
         public static IEventBusRabbitMQ EventBus { get; set; }
 
+        static int MessageId = 1;
         public static void Main(string[] args)
         {
             EventBus = new EventBusRabbitMQ(exchange: "");
@@ -14,15 +15,22 @@ namespace Sender
 
             EventBus.Model.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
 
-            for (int i = 1; i < 11; i++)
-            {
-                var message = $"{i}, Hi Benom!";
-                EventBus.Publish(message, queueName);
-                Console.WriteLine("Sent: {0}", message);
-            }
-
+            SendMessage(queueName);
             Console.WriteLine("Press [enter] to exit.");
             Console.ReadLine();
+        }
+
+        static void SendMessage(string queueName)
+        {
+            Console.Write($"Enter your {MessageId} message:");
+            var message = Console.ReadLine();
+
+            EventBus.Publish(message, queueName);
+            Console.WriteLine("[x] Sent:'{0}'", message);
+
+            MessageId++;
+
+            SendMessage(queueName);
         }
     }
 }
