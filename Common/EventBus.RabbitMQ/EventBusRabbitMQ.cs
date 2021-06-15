@@ -18,10 +18,10 @@ namespace EventBus.RabbitMQ
 
         public string Exchange { get; set; }
 
-        public void Publish(string message, string routingKey)
+        public void Publish(string message, string routingKey, IBasicProperties basicProperties = null)
         {
             var body = Encoding.UTF8.GetBytes(message);
-            Model.BasicPublish(exchange: Exchange, routingKey: routingKey, basicProperties: null, body: body);
+            Model.BasicPublish(exchange: Exchange, routingKey: routingKey, basicProperties: basicProperties, body: body);
         }
 
         ~EventBusRabbitMQ()
