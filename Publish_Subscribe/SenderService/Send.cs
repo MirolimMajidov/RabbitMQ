@@ -1,9 +1,8 @@
-﻿using System;
+﻿using EventBus.RabbitMQ;
 using RabbitMQ.Client;
-using System.Text;
-using SenderService;
+using System;
 
-namespace Send
+namespace SenderService
 {
     public class Send
     {
@@ -13,7 +12,6 @@ namespace Send
         public static void Main(string[] args)
         {
             EventBus = new EventBusRabbitMQ();
-            EventBus.Exchange = "sender";
             EventBus.Model.ExchangeDeclare(exchange: EventBus.Exchange, type: ExchangeType.Direct);
 
             SendMessage();
@@ -31,6 +29,8 @@ namespace Send
             var server = Console.ReadLine();
 
             EventBus.Publish(message, server);
+            Console.WriteLine("[x] Sent '{0}':'{1}'", server, message);
+
             MessageId++;
 
             SendMessage();

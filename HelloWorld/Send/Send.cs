@@ -1,29 +1,23 @@
-﻿using System;
-using RabbitMQ.Client;
-using System.Text;
+﻿using EventBus.RabbitMQ;
+using System;
 
-namespace Send
+namespace Sender
 {
     class Program
     {
+        public static IEventBusRabbitMQ EventBus { get; set; }
+
         public static void Main(string[] args)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            EventBus = new EventBusRabbitMQ(exchange: "");
+
+            EventBus.Model.QueueDeclare(queue: "Hi", durable: false, exclusive: false, autoDelete: false, arguments: null);
+
+            for (int i = 1; i < 11; i++)
             {
-                channel.QueueDeclare(queue: "Hi", durable: false, exclusive: false, autoDelete: false, arguments: null);
-
-                for (int i = 1; i < 11; i++)
-                    SendMessage($"{i}, Hi Benom!");
-
-                void SendMessage(string message)
-                {
-                    var body = Encoding.UTF8.GetBytes(message);
-                    channel.BasicPublish(exchange: "", routingKey: "Hi", basicProperties: null, body: body);
-
-                    Console.WriteLine("Sent: {0}", message);
-                }
+                var message = $"{i}, Hi Benom!";
+                EventBus.Publish(message, "Hi");
+                Console.WriteLine("Sent: {0}", message);
             }
 
             Console.WriteLine("Press [enter] to exit.");
