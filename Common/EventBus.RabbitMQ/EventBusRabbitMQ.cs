@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using EventBus.RabbitMQ.Extensions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Polly;
