@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SecondMicroservice.RabbitMQEvens.EventHandlers;
-using SecondMicroservice.RabbitMQEvens.Events;
+using SecondMicroservice.RabbitMQEvents.EventHandlers;
+using SecondMicroservice.RabbitMQEvents.Events;
 using System;
 using System.Reflection;
 
@@ -44,7 +44,7 @@ namespace SecondMicroservice
 
             app.UseRouting();
             app.UseAuthorization();
-            app.ConfigureEventBus();
+            app.UseEventBus();
 
             app.UseEndpoints(endpoints =>
             {
@@ -55,7 +55,7 @@ namespace SecondMicroservice
 
     public static class ApplicationBuilderExtensions
     {
-        public static void ConfigureEventBus(this IApplicationBuilder app)
+        public static void UseEventBus(this IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBusRabbitMQ>();
             eventBus.Subscribe<FirstTestEvent, FirstTestEventHandler>();

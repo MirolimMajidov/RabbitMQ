@@ -1,8 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EventBus.RabbitMQ;
-using FirstMicroservice.RabbitMQEvens.EventHandlers;
-using FirstMicroservice.RabbitMQEvens.Events;
+using FirstMicroservice.RabbitMQEvents.EventHandlers;
+using FirstMicroservice.RabbitMQEvents.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -44,7 +44,7 @@ namespace FirstMicroservice
 
             app.UseRouting();
             app.UseAuthorization();
-            app.ConfigureEventBus();
+            app.UseEventBus();
 
             app.UseEndpoints(endpoints =>
             {
@@ -55,7 +55,7 @@ namespace FirstMicroservice
 
     public static class ApplicationBuilderExtensions
     {
-        public static void ConfigureEventBus(this IApplicationBuilder app)
+        public static void UseEventBus(this IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBusRabbitMQ>();
             eventBus.Subscribe<SecondTestEvent, SecondTestEventHandler>();

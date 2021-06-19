@@ -1,10 +1,10 @@
 ﻿using EventBus.RabbitMQ;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SecondMicroservice.RabbitMQEvens.Events;
+using SecondMicroservice.RabbitMQEvents.Events;
 using System.Threading.Tasks;
 
-namespace SecondMicroservice.RabbitMQEvens.EventHandlers
+namespace SecondMicroservice.RabbitMQEvents.EventHandlers
 {
     public class FirstTestEventHandler : IRabbitMQEventHandler<FirstTestEvent>
     {

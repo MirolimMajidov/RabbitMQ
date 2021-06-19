@@ -1,5 +1,5 @@
 ﻿using EventBus.RabbitMQ;
-using FirstMicroservice.RabbitMQEvens.Events;
+using FirstMicroservice.RabbitMQEvents.Events;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

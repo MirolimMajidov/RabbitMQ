@@ -1,7 +1,7 @@
 ﻿using EventBus.RabbitMQ;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SecondMicroservice.RabbitMQEvens.Events;
+using SecondMicroservice.RabbitMQEvents.Events;
 
 namespace SecondMicroservice.Controllers
 {

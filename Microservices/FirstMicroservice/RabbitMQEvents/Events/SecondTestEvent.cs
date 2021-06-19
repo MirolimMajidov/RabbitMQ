@@ -1,7 +1,6 @@
 ﻿using EventBus.RabbitMQ;
-using System;
 
-namespace FirstMicroservice.RabbitMQEvens.Events
+namespace FirstMicroservice.RabbitMQEvents.Events
 {
     public class SecondTestEvent : RabbitMQEvent
     {
