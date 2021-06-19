@@ -13,7 +13,6 @@ namespace SecondMicroservice.Controllers
     {
         private readonly ILogger<SecondController> _logger;
         private readonly IEventBusRabbitMQ _eventBus;
-        string routingKey = "SecondMicroservice";
 
         public SecondController(ILogger<SecondController> logger, IEventBusRabbitMQ eventBus)
         {
@@ -26,20 +25,20 @@ namespace SecondMicroservice.Controllers
         {
             //_logger.LogInformation("Send '{0}' message.", message);
 
-            var queueName = _eventBus.Model.QueueDeclare().QueueName;
-            _eventBus.Model.QueueBind(queue: queueName, exchange: _eventBus.Exchange, routingKey: routingKey);
+            //var queueName = _eventBus.Model.QueueDeclare().QueueName;
+            //_eventBus.Model.QueueBind(queue: queueName, exchange: _eventBus.Exchange, routingKey: routingKey);
 
-            _logger.LogInformation("[*] Waiting for messages.");
+            //_logger.LogInformation("[*] Waiting for messages.");
 
-            var consumer = new EventingBasicConsumer(_eventBus.Model);
-            consumer.Received += (model, ea) =>
-            {
-                var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
+            //var consumer = new EventingBasicConsumer(_eventBus.Model);
+            //consumer.Received += (model, ea) =>
+            //{
+            //    var body = ea.Body.ToArray();
+            //    var message = Encoding.UTF8.GetString(body);
 
-                _logger.LogInformation("[x] Received '{0}':'{1}'", routingKey, message);
-            };
-            _eventBus.Model.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
+            //    _logger.LogInformation("[x] Received '{0}':'{1}'", routingKey, message);
+            //};
+            //_eventBus.Model.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
 
             return true;
         }

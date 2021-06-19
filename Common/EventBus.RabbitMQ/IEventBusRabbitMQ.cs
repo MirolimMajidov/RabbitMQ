@@ -1,13 +1,15 @@
-﻿using RabbitMQ.Client;
-
-namespace EventBus.RabbitMQ
+﻿namespace EventBus.RabbitMQ
 {
     public interface IEventBusRabbitMQ
     {
-        IModel Model { get; set; }
+        void Publish(RabbitMQEvent @event);
 
-        string Exchange { get; set; }
+        void Subscribe<TEvent, TEventHandler>()
+            where TEvent : RabbitMQEvent
+            where TEventHandler : IRabbitMQEventHandler<TEvent>;
 
-        void Publish(string message, string routingKey, IBasicProperties basicProperties = null);
+        void Unsubscribe<TEvent, TEventHandler>()
+            where TEvent : RabbitMQEvent
+            where TEventHandler : IRabbitMQEventHandler<TEvent>;
     }
 }

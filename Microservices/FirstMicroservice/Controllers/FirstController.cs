@@ -21,7 +21,7 @@ namespace FirstMicroservice.Controllers
         public bool Get(string message = "Default test FirstMicroservice")
         {
             _logger.LogInformation("Send '{0}' message.", message);
-            _eventBus.Publish(message, "SecondMicroservice");
+            //_eventBus.Publish(message, "SecondMicroservice");
 
             return true;
         }
