@@ -6,19 +6,23 @@ namespace EventBus.RabbitMQ
 {
     public partial class EventBusSubscriptionsManager : IEventBusSubscriptionsManager
     {
-        private readonly Dictionary<string, Type> _handlers;
-        private readonly List<Type> _eventTypes;
+        /// <summary>
+        /// Dictionary collection to store all event and event handler informations
+        /// </summary>
+        private readonly Dictionary<string, (Type EventType, Type EventHandlerType)> _subscriptions;
 
+        /// <summary/>
         public event EventHandler<string> OnEventRemoved;
 
         public EventBusSubscriptionsManager()
         {
-            _handlers = new Dictionary<string, Type>();
-            _eventTypes = new List<Type>();
+            _subscriptions = new Dictionary<string, (Type EventType, Type EventHandlerType)>();
         }
 
-        public bool IsEmpty => !_handlers.Keys.Any();
+        /// <summary/>
+        public bool IsEmpty => !_subscriptions.Any();
 
+        /// <summary/>
         public void AddSubscription<TEvent, TEventHandler>()
             where TEvent : RabbitMQEvent
             where TEventHandler : IRabbitMQEventHandler<TEvent>
@@ -27,64 +31,54 @@ namespace EventBus.RabbitMQ
             var handlerType = typeof(TEventHandler);
 
             if (HasSubscription(eventType.Name))
-                throw new ArgumentException($"Handler Type {handlerType.Name} already registered for '{eventType.Name}'", nameof(handlerType));
+                throw new ArgumentException($"{handlerType.Name} handler type already registered for '{eventType.Name}'", nameof(handlerType));
             else
-                _handlers.Add(eventType.Name, handlerType);
-
-            if (!_eventTypes.Contains(eventType))
-                _eventTypes.Add(eventType);
+                _subscriptions.Add(eventType.Name, (eventType, handlerType));
         }
 
+        /// <summary/>
         public void RemoveSubscription<TEvent, TEventHandler>()
             where TEvent : RabbitMQEvent
             where TEventHandler : IRabbitMQEventHandler<TEvent>
         {
             var eventName = GetEventKey<TEvent>();
-            if (HasSubscription<TEvent>())
+            if (HasSubscription(eventName))
             {
-                _handlers.Remove(eventName);
-                _eventTypes.Remove(typeof(TEvent));
+                _subscriptions.Remove(eventName);
 
                 RaiseOnEventRemoved(eventName);
             }
         }
 
-        public bool HasSubscription<TEvent>() where TEvent : RabbitMQEvent
-        {
-            var key = GetEventKey<TEvent>();
-            return HasSubscription(key);
-        }
+        /// <summary/>
+        public bool HasSubscription(string eventName) => _subscriptions.ContainsKey(eventName);
 
-        public bool HasSubscription(string eventName) => _handlers.ContainsKey(eventName);
+        /// <summary/>
+        public Type GetEventHandler(string eventName) => _subscriptions[eventName].EventHandlerType;
 
-
-        public Type GetEventHandler<TEvent>() where TEvent : RabbitMQEvent
-        {
-            if (HasSubscription<TEvent>())
-                return GetEventHandler(GetEventKey<TEvent>());
-
-            return null;
-        }
-
-        public Type GetEventHandler(string eventName) => _handlers[eventName];
-
+        /// <summary>
+        /// The method to fire subscribed event after removing event
+        /// </summary>
+        /// <param name="eventName">Removed event name</param>
         private void RaiseOnEventRemoved(string eventName)
         {
             var handler = OnEventRemoved;
             handler?.Invoke(this, eventName);
         }
 
-        public Type GetEventType(string eventName) => _eventTypes.FirstOrDefault(t => t.Name == eventName);
+        /// <summary/>
+        public Type GetEventType(string eventName) => _subscriptions[eventName].EventType;
 
+        /// <summary/>
         public string GetEventKey<TEvent>()
         {
             return typeof(TEvent).Name;
         }
 
+        /// <summary/>
         public void Clear()
         {
-            _handlers.Clear();
-            _eventTypes.Clear();
+            _subscriptions.Clear();
         }
     }
 }

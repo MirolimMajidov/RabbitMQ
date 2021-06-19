@@ -8,8 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
-using SecondMicroservice.EventBusRabbitMQ.EventHandlers;
-using SecondMicroservice.EventBusRabbitMQ.Events;
+using SecondMicroservice.RabbitMQEvens.EventHandlers;
+using SecondMicroservice.RabbitMQEvens.Events;
 using System;
 using System.Reflection;
 

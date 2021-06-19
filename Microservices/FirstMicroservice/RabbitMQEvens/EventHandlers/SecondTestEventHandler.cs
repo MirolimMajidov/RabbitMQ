@@ -1,10 +1,10 @@
 ﻿using EventBus.RabbitMQ;
-using SecondMicroservice.EventBusRabbitMQ.Events;
+using FirstMicroservice.RabbitMQEvens.Events;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
-namespace SecondMicroservice.EventBusRabbitMQ.EventHandlers
+namespace FirstMicroservice.RabbitMQEvens.EventHandlers
 {
     public class SecondTestEventHandler : IRabbitMQEventHandler<SecondTestEvent>
     {
@@ -17,7 +17,7 @@ namespace SecondMicroservice.EventBusRabbitMQ.EventHandlers
 
         public async Task Handle(SecondTestEvent @event)
         {
-            _logger.LogInformation("Received {Event} event on {AppName} app: ({IntegrationEvent})", @event.GetType().Name, "SecondMicroservice", JsonConvert.SerializeObject(@event));
+            _logger.LogInformation("Received {Event} event: ({IntegrationEvent})", @event.GetType().Name, JsonConvert.SerializeObject(@event));
 
             await Task.CompletedTask;
         }

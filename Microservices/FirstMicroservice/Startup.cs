@@ -1,8 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EventBus.RabbitMQ;
-using FirstMicroservice.EventBusRabbitMQ.EventHandlers;
-using FirstMicroservice.EventBusRabbitMQ.Events;
+using FirstMicroservice.RabbitMQEvens.EventHandlers;
+using FirstMicroservice.RabbitMQEvens.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

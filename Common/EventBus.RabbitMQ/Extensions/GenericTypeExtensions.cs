@@ -5,6 +5,9 @@ namespace EventBus.RabbitMQ.Extensions
 {
     public static class GenericTypeExtensions
     {
+        /// <summary>
+        /// To get name of generic type
+        /// </summary>
         public static string GetGenericTypeName(this Type type)
         {
             var typeName = string.Empty;
@@ -20,11 +23,6 @@ namespace EventBus.RabbitMQ.Extensions
             }
 
             return typeName;
-        }
-
-        public static string GetGenericTypeName(this object @object)
-        {
-            return @object.GetType().GetGenericTypeName();
         }
     }
 }

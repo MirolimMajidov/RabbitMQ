@@ -15,9 +15,6 @@ namespace EventBus.RabbitMQ
         readonly ILogger<RabbitMQConnection> _logger;
         readonly int _retryCount;
         IConnection _connection;
-        bool _disposed;
-
-        object sync_root = new();
 
         public RabbitMQConnection(IConnectionFactory connectionFactory, ILogger<RabbitMQConnection> logger, int retryCount = 5)
         {
@@ -26,20 +23,24 @@ namespace EventBus.RabbitMQ
             _retryCount = retryCount;
         }
 
-        public int RetryCount => _retryCount;
-
+        /// <summary/>
         public bool IsConnected => _connection != null && _connection.IsOpen && !_disposed;
 
+        /// <summary/>
+        public int RetryCount => _retryCount;
+
+        /// <summary/>
         public IModel CreateModel()
         {
             if (!IsConnected)
-            {
-                throw new InvalidOperationException("No RabbitMQ connections are available to perform this action");
-            }
+                throw new InvalidOperationException("RabbitMQ's connection is not opened yet");
 
             return _connection.CreateModel();
         }
 
+        readonly object sync_root = new();
+
+        /// <summary/>
         public bool TryConnect()
         {
             _logger.LogInformation("RabbitMQ Client is trying to connect");
@@ -65,7 +66,7 @@ namespace EventBus.RabbitMQ
                     _connection.CallbackException += OnCallbackException;
                     _connection.ConnectionBlocked += OnConnectionBlocked;
 
-                    _logger.LogInformation("RabbitMQ Client acquired a persistent connection to '{HostName}' and is subscribed to failure events", _connection.Endpoint.HostName);
+                    _logger.LogInformation("RabbitMQ's connection opened on '{HostName}' host", _connection.Endpoint.HostName);
 
                     return true;
                 }
@@ -78,11 +79,9 @@ namespace EventBus.RabbitMQ
             }
         }
 
-        private void OnConnectionBlocked(object sender, ConnectionBlockedEventArgs e)
+        void OnConnectionBlocked(object sender, ConnectionBlockedEventArgs e)
         {
             if (_disposed) return;
-
-            _logger.LogWarning("A RabbitMQ connection is shutdown. Trying to re-connect...");
 
             TryConnect();
         }
@@ -91,8 +90,6 @@ namespace EventBus.RabbitMQ
         {
             if (_disposed) return;
 
-            _logger.LogWarning("A RabbitMQ connection throw exception. Trying to re-connect...");
-
             TryConnect();
         }
 
@@ -100,11 +97,13 @@ namespace EventBus.RabbitMQ
         {
             if (_disposed) return;
 
-            _logger.LogWarning("A RabbitMQ connection is on shutdown. Trying to re-connect...");
-
             TryConnect();
         }
 
+        private bool _disposed;
+        /// <summary>
+        /// To close opened connection before disposing
+        /// </summary>
         public void Dispose()
         {
             if (_disposed) return;
