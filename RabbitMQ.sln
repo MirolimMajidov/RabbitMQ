@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstMicroservice", "Microservices\FirstMicroservice\FirstMicroservice.csproj", "{DDF49A96-E4B7-425A-B4D3-1BFF58329755}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondMicroservice", "SecondMicroservice\SecondMicroservice.csproj", "{28F53352-9E99-4A2F-A8FD-838A7559D422}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondMicroservice", "Microservices\SecondMicroservice\SecondMicroservice.csproj", "{28F53352-9E99-4A2F-A8FD-838A7559D422}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

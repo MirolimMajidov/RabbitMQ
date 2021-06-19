@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\EventBus.RabbitMQ\EventBus.RabbitMQ.csproj" />
+    <ProjectReference Include="..\..\Common\EventBus.RabbitMQ\EventBus.RabbitMQ.csproj" />
   </ItemGroup>
 
 </Project>
