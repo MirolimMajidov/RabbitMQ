@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SecondMicroservice.EventBusRabbitMQ.Events;
 using System.Text;
 
 namespace SecondMicroservice.Controllers
@@ -23,22 +24,11 @@ namespace SecondMicroservice.Controllers
         [HttpGet]
         public bool Get(string message = "Default test SecondMicroservice")
         {
-            //_logger.LogInformation("Send '{0}' message.", message);
-
-            //var queueName = _eventBus.Model.QueueDeclare().QueueName;
-            //_eventBus.Model.QueueBind(queue: queueName, exchange: _eventBus.Exchange, routingKey: routingKey);
-
-            //_logger.LogInformation("[*] Waiting for messages.");
-
-            //var consumer = new EventingBasicConsumer(_eventBus.Model);
-            //consumer.Received += (model, ea) =>
-            //{
-            //    var body = ea.Body.ToArray();
-            //    var message = Encoding.UTF8.GetString(body);
-
-            //    _logger.LogInformation("[x] Received '{0}':'{1}'", routingKey, message);
-            //};
-            //_eventBus.Model.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
+            _logger.LogInformation("Send '{0}' message from SecondMicroservice.", message);
+            var test = new FirstTestEvent() { Message = message };
+            var test2 = new SecondTestEvent() { Message = message };
+            _eventBus.Publish(test);
+            _eventBus.Publish(test2);
 
             return true;
         }

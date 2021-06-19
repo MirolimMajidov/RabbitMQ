@@ -1,6 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using EventBus.RabbitMQ;
+using FirstMicroservice.EventBusRabbitMQ.EventHandlers;
+using FirstMicroservice.EventBusRabbitMQ.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using System;
+using System.Reflection;
 
 namespace FirstMicroservice
 {
@@ -63,6 +66,8 @@ namespace FirstMicroservice
 
             var container = new ContainerBuilder();
             container.Populate(services);
+            container.RegisterAssemblyTypes(typeof(Startup).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRabbitMQEventHandler<>));
             return new AutofacServiceProvider(container.Build());
         }
 
@@ -82,6 +87,13 @@ namespace FirstMicroservice
             {
                 endpoints.MapControllers();
             });
+            ConfigureEventBus(app);
+        }
+
+        private void ConfigureEventBus(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBusRabbitMQ>();
+            eventBus.Subscribe<SecondTestEvent, SecondTestEventHandler>();
         }
     }
 }

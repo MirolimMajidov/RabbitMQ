@@ -1,4 +1,5 @@
 ﻿using EventBus.RabbitMQ;
+using FirstMicroservice.EventBusRabbitMQ.Events;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -20,8 +21,9 @@ namespace FirstMicroservice.Controllers
         [HttpGet]
         public bool Get(string message = "Default test FirstMicroservice")
         {
-            _logger.LogInformation("Send '{0}' message.", message);
-            //_eventBus.Publish(message, "SecondMicroservice");
+            _logger.LogInformation("Send '{0}' message from FirstMicroservice.", message);
+            var test = new FirstTestEvent() { Message = message };
+            _eventBus.Publish(test);
 
             return true;
         }
