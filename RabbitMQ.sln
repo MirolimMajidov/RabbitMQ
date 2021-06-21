@@ -35,9 +35,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.RabbitMQ", "Common
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{66A89CC1-D5E7-4B69-BAF6-908EDA75F965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstMicroservice", "Microservices\FirstMicroservice\FirstMicroservice.csproj", "{DDF49A96-E4B7-425A-B4D3-1BFF58329755}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirstMicroservice", "Microservices\FirstMicroservice\FirstMicroservice.csproj", "{DDF49A96-E4B7-425A-B4D3-1BFF58329755}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondMicroservice", "Microservices\SecondMicroservice\SecondMicroservice.csproj", "{28F53352-9E99-4A2F-A8FD-838A7559D422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecondMicroservice", "Microservices\SecondMicroservice\SecondMicroservice.csproj", "{28F53352-9E99-4A2F-A8FD-838A7559D422}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RemoteProcedureCall", "RemoteProcedureCall", "{9B934FCD-CCFB-47F7-AC16-C6DC70F65C0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPCServer", "RemoteProcedureCall\RPCServer\RPCServer.csproj", "{02DA2DF6-AD26-442D-B9E5-52DA47757D31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPCClient", "RemoteProcedureCall\RPCClient\RPCClient.csproj", "{0E77AF46-1815-4AF5-B214-9A55FD4B9CD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +99,14 @@ Global
 		{28F53352-9E99-4A2F-A8FD-838A7559D422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28F53352-9E99-4A2F-A8FD-838A7559D422}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28F53352-9E99-4A2F-A8FD-838A7559D422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02DA2DF6-AD26-442D-B9E5-52DA47757D31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02DA2DF6-AD26-442D-B9E5-52DA47757D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02DA2DF6-AD26-442D-B9E5-52DA47757D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02DA2DF6-AD26-442D-B9E5-52DA47757D31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E77AF46-1815-4AF5-B214-9A55FD4B9CD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E77AF46-1815-4AF5-B214-9A55FD4B9CD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E77AF46-1815-4AF5-B214-9A55FD4B9CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E77AF46-1815-4AF5-B214-9A55FD4B9CD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,6 +124,8 @@ Global
 		{18759415-40B4-40DD-9D82-BA0898020767} = {FA1C6D01-5012-4B6C-8FF0-B69828351568}
 		{DDF49A96-E4B7-425A-B4D3-1BFF58329755} = {66A89CC1-D5E7-4B69-BAF6-908EDA75F965}
 		{28F53352-9E99-4A2F-A8FD-838A7559D422} = {66A89CC1-D5E7-4B69-BAF6-908EDA75F965}
+		{02DA2DF6-AD26-442D-B9E5-52DA47757D31} = {9B934FCD-CCFB-47F7-AC16-C6DC70F65C0D}
+		{0E77AF46-1815-4AF5-B214-9A55FD4B9CD4} = {9B934FCD-CCFB-47F7-AC16-C6DC70F65C0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D4E9E9F-EF91-4BE4-956D-2ADEAD609B14}
